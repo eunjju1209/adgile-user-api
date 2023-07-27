@@ -1,0 +1,22 @@
+
+server:
+  shutdown: graceful
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1234
+      jdbc-url: jdbc:mysql://localhost:3308/adgile_user?serverTimezone=UTC&characterEncoding=UTF-8
+  flyway:
+#    user: root
+#    password: 1234
+#    schemas: adgile_user
+#    url: jdbc:mysql://localhost:3308/adgile_user?serverTimezone=UTC&characterEncoding=UTF-8
+    enabled: true
+
