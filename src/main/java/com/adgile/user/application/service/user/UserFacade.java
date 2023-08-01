@@ -4,7 +4,7 @@ import com.adgile.user.domain.user.User;
 import com.adgile.user.domain.user.UserConditional;
 import com.adgile.user.domain.user.UserReader;
 import com.adgile.user.domain.user.UserStore;
-import com.adgile.user.infrastructure.user.UserRepository;
+import com.adgile.user.infrastructure.message.AmazonSqsSender;
 import com.adgile.user.presentation.dto.user.UserDto;
 import com.adgile.user.presentation.dto.user.UserDtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,11 @@ import java.security.InvalidParameterException;
 @Service
 @RequiredArgsConstructor
 public class UserFacade {
+
 	private final UserReader userReader;
 	private final UserStore userStore;
 	private final UserDtoMapper userMapper;
+	private final AmazonSqsSender sqsSender;
 
 	public void registerUser(UserDto.UserCreateRequest request) {
 		// user id 중복 체크
@@ -80,4 +82,20 @@ public class UserFacade {
 	}
 
 	// 리스트 조회
+
+	// 채팅 보내기
+	public void doChat(UserDto.UserChatRequest request) {
+		// user 조회
+
+		var where = UserConditional.builder()
+				.id(request.getUserId())
+				.build();
+
+		this.getUser(where);
+
+		// chat sender
+		var chatRequest = new UserDto.SqsChat(request);
+		log.info("chatRequest == {}", chatRequest);
+		sqsSender.sendMessage(chatRequest);
+	}
 }

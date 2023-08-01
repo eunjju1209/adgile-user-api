@@ -21,5 +21,13 @@ spring:
     url: jdbc:mysql://localhost:3308/adgile_user?serverTimezone=UTC&characterEncoding=UTF-8
     enabled: true
 
-#logging:
-#  config: classpath:logback-local.xml
+### aws sqs configuration
+cloud:
+  aws:
+    credentials:
+      access-key: { { accesskey } }
+      secret-key: { { secret-key } }
+    sqs:
+      queue:
+        name: { { name } }
+        url: https://sqs.ap-northeast-2.amazonaws.com/122312/{{name}}

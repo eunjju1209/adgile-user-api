@@ -23,3 +23,13 @@ Content-Type: application/json
 ### 리스트 조회
 GET {{local}}/v1/user
 Content-Type: application/json
+
+### 채팅 등록
+POST {{local}}/v1/user/chat
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "companyId": 2,
+  "message": "테스트 111234"
+}

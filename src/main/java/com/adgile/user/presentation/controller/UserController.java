@@ -14,7 +14,6 @@ public class UserController {
 
 	private final UserFacade userFacade;
 
-
 	@PostMapping
 	public CommonResponse<String> doRegister(@RequestBody @Valid UserDto.UserCreateRequest request) {
 		userFacade.registerUser(request);
@@ -31,5 +30,11 @@ public class UserController {
 	public CommonResponse<UserDto.UserInfoResponse> getUser(@PathVariable Long id) {
 		var result = userFacade.getUserById(id);
 		return CommonResponse.success(result);
+	}
+
+	@PostMapping("/chat")
+	public CommonResponse<String> doChat(@RequestBody @Valid UserDto.UserChatRequest request) {
+		userFacade.doChat(request);
+		return CommonResponse.OK;
 	}
 }
